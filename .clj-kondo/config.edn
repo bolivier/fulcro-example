@@ -1,0 +1,5 @@
+{:lint-as {com.fulcrologic.guardrails.core/>defn clojure.core/defn
+           #_#_com.wsscode.pathom.connect/defresolver clojure.core/defn
+           com.fulcrologic.fulcro.components/defsc clojure.core/defn
+           com.fulcrologic.fulcro.mutations/defmutation clj-kondo.lint-as/def-catch-all
+           #_#_com.wsscode.pathom.connect/defmutation nil}}

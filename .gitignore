@@ -1,0 +1,9 @@
+/.clj-kondo/.cache
+/node_modules
+/.shadow-cljs
+/resources/public/js
+
+# cursive plugin
+/app.iml
+/.idea
+/.cpcache
