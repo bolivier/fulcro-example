@@ -1,5 +1,13 @@
 {:deps     {:aliases [:dev]}
+
+ :nrepl {:port 8777
+         :middleware [refactor-nrepl.middleware/wrap-refactor]}
+
  :dev-http {8000 "classpath:public"}
+
+ :dependencies [[cider/cider-nrepl "0.18.0"]
+                [refactor-nrepl/refactor-nrepl "2.4.0"]]
+
  :builds   {:main {:target     :browser
                    :output-dir "resources/public/js/main"
                    :asset-path "/js/main"
