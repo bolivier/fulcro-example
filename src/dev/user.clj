@@ -2,6 +2,7 @@
   (:require
    [mount.core :as mount]
    [app.server]
+   [app.resolvers]
    [shadow.cljs.devtools.api :as shadow]
    [shadow.cljs.devtools.server :as server]
    [app.parser]))

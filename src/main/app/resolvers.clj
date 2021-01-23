@@ -1,6 +1,7 @@
 (ns app.resolvers
   (:require [com.wsscode.pathom.core :as p]
             [taoensso.timbre :as log]
+            [mount.core :refer [defstate]]
             [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
 
 ;; TODO: I can't figure out why the UI isn't receiving the props.  The network
@@ -50,4 +51,5 @@
   {::pc/output [{:enemies [:list/id]}]}
   {:enemies {:list/id :enemies}})
 
-(def resolvers [person-resolver list-resolver enemies-resolver friends-resolver])
+(defstate resolvers
+  :start [person-resolver list-resolver enemies-resolver friends-resolver])

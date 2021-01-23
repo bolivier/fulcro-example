@@ -28,7 +28,7 @@
 (comment
   ;; this query (sent to the api-parser fn) fails
   (api-parser
-   {:enemies [:list/id :list/label {:list/people [:person/id :person/name :person/age]}]})
+   [{:enemies [:list/label {:list/people [:person/name]}]}])
 
   ;; this query succeeds
   (api-parser
