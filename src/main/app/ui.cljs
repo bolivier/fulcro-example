@@ -17,19 +17,29 @@
    :ident :list/id}
   (let [delete-person (fn [person-id] (comp/transact! this [(api/delete-person {:list/id id :person/id person-id})]))] ; (2)
     (dom/div
+     (dom/h3 label)
+     (when people
       (dom/ul
-        (map #(ui-person (comp/computed % {:onDelete delete-person})) people)))))
+       (map #(ui-person (comp/computed % {:onDelete delete-person})) people))))))
 
 (def ui-person-list (comp/factory PersonList))
+
+(defsc Todo [this {:todo/keys [label]}]
+  {:query [:todo/label :todo/id]}
+  (dom/li
+   (dom/span label)))
+
+(def ui-todo (comp/factory Todo))
+
+
+;; finish this:
+(defsc TodoList [this {:keys [:todo-list/items]}]
+  (map ui-todo items))
 
 (defsc Root [this {:keys [friends enemies]}]
   {:query         [{:friends (comp/get-query PersonList)}
                    {:enemies (comp/get-query PersonList)}]
    :initial-state {}}
   (dom/div
-    (dom/h3 "Friends")
-    (when friends
-      (ui-person-list friends))
-    (dom/h3 "Enemies")
-    (when enemies
-      (ui-person-list enemies))))
+   (ui-person-list friends)
+   (ui-person-list enemies)))

@@ -24,11 +24,11 @@
               :list/label  "Enemies"
               :list/people [4 3]}}))
 
-
 (defresolver person-resolver [env {:person/keys [id]}]
   {::pc/input #{:person/id}
    ::pc/output [:person/name :person/age]}
   (get @people-table id))
+
 
 (defn ->person-ident [id]
   {:person/id id})
@@ -51,5 +51,13 @@
   {::pc/output [{:enemies [:list/id]}]}
   {:enemies {:list/id :enemies}})
 
+(def todo-table
+  (atom {1 #:todo{:label "learn Fulcro" :id 1 :done? false}
+         2 #:todo{:label "populate frontend code" :id 2 :done? false }}))
+
+(defresolver todo-list-resolver [env _]
+  {::pc/output [{:todos/list [:todo/label :todo/done? :todo/id]}]}
+  {:todos/list (into [] (vals @todo-table))})
+
 (defstate resolvers
-  :start [person-resolver list-resolver enemies-resolver friends-resolver])
+  :start [person-resolver list-resolver enemies-resolver friends-resolver todo-list-resolver])
