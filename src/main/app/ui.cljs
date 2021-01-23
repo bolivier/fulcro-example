@@ -8,7 +8,7 @@
   {:query [:person/id :person/name :person/age]
    :ident :person/id}
   (dom/li
-    (dom/h5 (str name " (age: " age ")") (dom/button {:onClick #(onDelete id)} "X")))) ; (4)
+    (dom/h5 (str name " (age: " age ")") (dom/button {:onClick #(onDelete id)} "X"))))
 
 (def ui-person (comp/factory Person {:keyfn :person/id}))
 
@@ -25,21 +25,22 @@
 (def ui-person-list (comp/factory PersonList))
 
 (defsc Todo [this {:todo/keys [label]}]
-  {:query [:todo/label :todo/id]}
+  {:query [:todo/label :todo/id :todo/done?]
+   :ident :todo/id}
   (dom/li
    (dom/span label)))
 
-(def ui-todo (comp/factory Todo))
+(def ui-todo (comp/factory Todo {:keyfn :todo/id}))
 
+(defsc TodoList [this todos]
+  {:query (fn [] (comp/get-query Todo))}
+  (map ui-todo todos))
 
-;; finish this:
-(defsc TodoList [this {:keys [:todo-list/items]}]
-  (map ui-todo items))
+(def ui-todo-list (comp/factory TodoList))
 
-(defsc Root [this {:keys [friends enemies]}]
-  {:query         [{:friends (comp/get-query PersonList)}
-                   {:enemies (comp/get-query PersonList)}]
+(defsc Root [this {:keys [todos]}]
+  {:query         [{:todos (comp/get-query TodoList)}
+                   {:friends (comp/get-query PersonList)}]
    :initial-state {}}
   (dom/div
-   (ui-person-list friends)
-   (ui-person-list enemies)))
+   (ui-todo-list todos)))
