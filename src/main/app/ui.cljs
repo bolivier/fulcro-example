@@ -6,7 +6,7 @@
 
 (defsc Person [this {:person/keys [id name age] :as props} {:keys [onDelete]}]
   {:query [:person/id :person/name :person/age]
-   :ident (fn [] [:person/id (:person/id props)])}
+   :ident :person/id}
   (dom/li
     (dom/h5 (str name " (age: " age ")") (dom/button {:onClick #(onDelete id)} "X")))) ; (4)
 
@@ -14,7 +14,7 @@
 
 (defsc PersonList [this {:list/keys [id label people] :as props}]
   {:query [:list/id :list/label {:list/people (comp/get-query Person)}]
-   :ident (fn [] [:list/id (:list/id props)])}
+   :ident :list/id}
   (let [delete-person (fn [person-id] (comp/transact! this [(api/delete-person {:list/id id :person/id person-id})]))] ; (2)
     (dom/div
       (dom/ul
