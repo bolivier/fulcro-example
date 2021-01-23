@@ -30,9 +30,10 @@
   (api-parser
    [{:enemies [:list/label {:list/people [:person/name]}]}])
 
+
   ;; this query succeeds
   (api-parser
    [{:enemies [:list/id :list/label {:list/people [:person/id :person/name :person/age]}]}])
 
-  (api-parser [{:todos/list [:todo/label :todo/done?]}])
+  (api-parser [{:todos [:todo/label]}])
   )

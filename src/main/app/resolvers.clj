@@ -55,9 +55,14 @@
   (atom {1 #:todo{:label "learn Fulcro" :id 1 :done? false}
          2 #:todo{:label "populate frontend code" :id 2 :done? false }}))
 
+(defresolver todo-resolver [env {:todo/keys [id]}]
+  {::pc/input #{:todo/id}
+   ::pc/output [:todo/label :todo/id :todo/done?]
+   (get @todo-table id)})
+
 (defresolver todo-list-resolver [env _]
-  {::pc/output [{:todos/list [:todo/label :todo/done? :todo/id]}]}
-  {:todos/list (into [] (vals @todo-table))})
+  {::pc/output [{:todos [:todo/id]}]}
+  {:todos (into [] (keys @todo-table))})
 
 (defstate resolvers
   :start [person-resolver list-resolver enemies-resolver friends-resolver todo-list-resolver])
