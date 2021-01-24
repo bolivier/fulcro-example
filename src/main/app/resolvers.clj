@@ -57,12 +57,18 @@
 
 (defresolver todo-resolver [env {:todo/keys [id]}]
   {::pc/input #{:todo/id}
-   ::pc/output [:todo/label :todo/id :todo/done?]
-   (get @todo-table id)})
+   ::pc/output [:todo/label :todo/id :todo/done?]}
+  (get @todo-table id))
 
 (defresolver todo-list-resolver [env _]
   {::pc/output [{:todos [:todo/id]}]}
-  {:todos (into [] (keys @todo-table))})
+  {:todos (mapv
+           (fn [id] {:todo/id id})
+           (keys @todo-table))})
 
 (defstate resolvers
-  :start [person-resolver list-resolver enemies-resolver friends-resolver todo-list-resolver])
+  :start [person-resolver list-resolver enemies-resolver friends-resolver todo-list-resolver todo-resolver])
+
+(comment
+  @todo-table
+  nil)

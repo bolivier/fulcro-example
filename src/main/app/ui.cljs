@@ -24,11 +24,14 @@
 
 (def ui-person-list (comp/factory PersonList))
 
-(defsc Todo [this {:todo/keys [label]}]
+(defsc Todo [this {:todo/keys [label id]}]
   {:query [:todo/label :todo/id :todo/done?]
    :ident :todo/id}
   (dom/li
-   (dom/span label)))
+   (dom/span label)
+   (dom/button {:onClick (fn []
+                           (comp/transact! this [(api/delete-todo {:todo/id id})]))}
+               "X")))
 
 (def ui-todo (comp/factory Todo {:keyfn :todo/id}))
 

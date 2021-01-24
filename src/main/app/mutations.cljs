@@ -12,3 +12,15 @@
                  [:person/id person-id]
                  [:list/id list-id :list/people]))
   (remote [env] true))
+
+(defmutation delete-todo
+  "Mutation to delete a todo item"
+  [{todo-id :todo/id}]
+  (action [{:keys [state]}]
+          (swap!
+           state
+           update :todos (fn [todos]
+                           (remove
+                            #(= (:todo/id %) todo-id)
+                            todos))))
+  (remote [env] true))
