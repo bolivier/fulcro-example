@@ -1,3 +1,6 @@
+;; This ns often needs to be compiled separately to work properly.  I'm not sure
+;; why.
+
 (ns app.parser
   (:require
    [mount.core :refer [defstate]]
