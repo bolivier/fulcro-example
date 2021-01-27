@@ -4,10 +4,6 @@
             [mount.core :refer [defstate]]
             [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
 
-;; TODO: I can't figure out why the UI isn't receiving the props.  The network
-;; response shows that friends/enemies are :not-found by pathom.  However, I can
-;; run the query on the api-parser and they work _just fine_.
-
 (def people-table
   (atom
    {1 {:person/id 1 :person/name "Sally" :person/age 32}
@@ -51,24 +47,24 @@
   {::pc/output [{:enemies [:list/id]}]}
   {:enemies {:list/id :enemies}})
 
-(def todo-table
-  (atom {1 #:todo{:label "learn Fulcro" :id 1 :done? false}
-         2 #:todo{:label "populate frontend code" :id 2 :done? false }}))
+(def task-table
+  (atom {1 #:task{:label "learn Fulcro" :id 1 :done? false}
+         2 #:task{:label "populate frontend code" :id 2 :done? false }}))
 
-(defresolver todo-resolver [env {:todo/keys [id]}]
-  {::pc/input #{:todo/id}
-   ::pc/output [:todo/label :todo/id :todo/done?]}
-  (get @todo-table id))
+(defresolver task-resolver [env {:task/keys [id]}]
+  {::pc/input #{:task/id}
+   ::pc/output [:task/label :task/id :task/done?]}
+  (get @task-table id))
 
-(defresolver todo-list-resolver [env _]
-  {::pc/output [{:todos [:todo/id]}]}
-  {:todos (mapv
-           (fn [id] {:todo/id id})
-           (keys @todo-table))})
+(defresolver task-list-resolver [env _]
+  {::pc/output [{:tasks [:task/id]}]}
+  {:tasks (mapv
+           (fn [id] {:task/id id})
+           (keys @task-table))})
 
 (defstate resolvers
-  :start [person-resolver list-resolver enemies-resolver friends-resolver todo-list-resolver todo-resolver])
+  :start [person-resolver list-resolver enemies-resolver friends-resolver task-list-resolver task-resolver])
 
 (comment
-  @todo-table
+  @task-table
   nil)

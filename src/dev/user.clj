@@ -7,9 +7,6 @@
    [shadow.cljs.devtools.server :as server]
    [app.parser]))
 
-
-;; TODO: this does not work properly because it isn't loaded by default with
-;; deps.edn
 (defn start []
   (mount/start))
 

@@ -8,7 +8,7 @@
 (defn ^:export init []
   (df/load! app :friends ui/PersonList)
   #_(df/load! app :enemies ui/PersonList)
-  (df/load! app :todos ui/TodoList)
+  (df/load! app :tasks ui/TaskList)
   (app/mount! app ui/Root "app")
   (js/console.log "Loaded"))
 

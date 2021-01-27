@@ -1,5 +1,5 @@
 (ns app.mutations
-  (:require [app.resolvers :refer [list-table todo-table]]
+  (:require [app.resolvers :refer [list-table task-table]]
             [com.wsscode.pathom.connect :as pc]
             [mount.core :refer [defstate]]
             [taoensso.timbre :as log]))
@@ -11,10 +11,10 @@
   (swap! list-table update list-id update :list/people (fn [old-list]
                                                          (filterv #(not= person-id %)
                                                                   old-list))))
-(pc/defmutation delete-todo [env {todo-id :todo/id}]
-  {::pc/sym `delete-todo}
-  (log/info "deleting todo with id " todo-id)
-  (swap! todo-table dissoc todo-id))
+(pc/defmutation delete-task [env {task-id :task/id}]
+  {::pc/sym `delete-task}
+  (log/info "deleting task with id " task-id)
+  (swap! task-table dissoc task-id))
 
 (defstate mutations
-  :start [delete-person delete-todo])
+  :start [delete-person delete-task])

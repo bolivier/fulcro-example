@@ -37,6 +37,6 @@
    [{:enemies [:list/id :list/label {:list/people [:person/id :person/name :person/age]}]}])
 
   ;; this query fails again....
-  ;; no idea why, it should work from todo-
-  (api-parser [{:todos [:todo/label ]}])
+  ;; no idea why, it should work from task-
+  (api-parser [{:tasks [:task/label ]}])
   )

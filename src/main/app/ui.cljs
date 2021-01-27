@@ -24,26 +24,26 @@
 
 (def ui-person-list (comp/factory PersonList))
 
-(defsc Todo [this {:todo/keys [label id]}]
-  {:query [:todo/label :todo/id :todo/done?]
-   :ident :todo/id}
+(defsc Task [this {:task/keys [label id]}]
+  {:query [:task/label :task/id :task/done?]
+   :ident :task/id}
   (dom/li
    (dom/span label)
    (dom/button {:onClick (fn []
-                           (comp/transact! this [(api/delete-todo {:todo/id id})]))}
+                           (comp/transact! this [(api/delete-task {:task/id id})]))}
                "X")))
 
-(def ui-todo (comp/factory Todo {:keyfn :todo/id}))
+(def ui-task (comp/factory Task {:keyfn :task/id}))
 
-(defsc TodoList [this todos]
-  {:query (fn [] (comp/get-query Todo))}
-  (map ui-todo todos))
+(defsc TaskList [this tasks]
+  {:query (fn [] (comp/get-query Task))}
+  (map ui-task tasks))
 
-(def ui-todo-list (comp/factory TodoList))
+(def ui-task-list (comp/factory TaskList))
 
-(defsc Root [this {:keys [todos]}]
-  {:query         [{:todos (comp/get-query TodoList)}
+(defsc Root [this {:keys [tasks]}]
+  {:query         [{:tasks (comp/get-query TaskList)}
                    {:friends (comp/get-query PersonList)}]
    :initial-state {}}
   (dom/div
-   (ui-todo-list todos)))
+   (ui-task-list tasks)))

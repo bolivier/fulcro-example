@@ -13,14 +13,14 @@
                  [:list/id list-id :list/people]))
   (remote [env] true))
 
-(defmutation delete-todo
-  "Mutation to delete a todo item"
-  [{todo-id :todo/id}]
+(defmutation delete-task
+  "Mutation to delete a task item"
+  [{task-id :task/id}]
   (action [{:keys [state]}]
           (swap!
            state
-           update :todos (fn [todos]
+           update :tasks (fn [tasks]
                            (remove
-                            #(= (:todo/id %) todo-id)
-                            todos))))
+                            #(= (:task/id %) task-id)
+                            tasks))))
   (remote [env] true))
