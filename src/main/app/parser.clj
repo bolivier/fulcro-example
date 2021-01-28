@@ -30,16 +30,10 @@
            (pathom-parser {} query)))
 
 (comment
-  ;; this query (sent to the api-parser fn) fails
-  (api-parser
-   [{:enemies [:list/label {:list/people [:person/name]}]}])
+  (api-parser [{[:task-list/id 1] [:task-list/name
+                                   {:task-list/tasks
+                                    [:task/label
+                                     :task/id]}]}])
 
-
-  ;; this query succeeds
-  (api-parser
-   [{:enemies [:list/id :list/label {:list/people [:person/id :person/name :person/age]}]}])
-
-  ;; this query fails again....
-  ;; no idea why, it should work from task-
-  (api-parser [{:tasks [:task/label ]}])
+  (api-parser [{[:task/id 1] [:task/id :task/done? :task/label]}])
   )

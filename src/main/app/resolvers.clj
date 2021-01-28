@@ -3,7 +3,8 @@
             [taoensso.timbre :as log]
             [mount.core :refer [defstate]]
             [com.wsscode.pathom.connect :as pc :refer [defresolver]]
-            [app.db :as db]))
+            [app.db :as db]
+            [datascript.core :as d]))
 
 (def people-table
   (atom
@@ -57,15 +58,31 @@
    ::pc/output [:task/label :task/id :task/done?]}
   (db/get-task id))
 
-(defresolver task-list-resolver [env _]
+(defresolver all-tasks-resolver [env _]
   {::pc/output [{:tasks [:task/id]}]}
   {:tasks
    (mapv
     (fn [[id]] {:task/id id})
     (db/all-task-list))})
 
+(defresolver task-list-resolver [env {:task-list/keys [id]}]
+  {::pc/input #{:task-list/id}
+   ::pc/output [:task-list/name {:task-list/tasks [:task/id]}]}
+  (update
+   (ffirst (db/get-task-list 1))
+   :task-list/tasks
+   (fn [tasks]
+     (mapv (fn [task-id] {:task/id task-id})
+          tasks))))
+
 (defstate resolvers
-  :start [person-resolver list-resolver enemies-resolver friends-resolver task-list-resolver task-resolver])
+  :start [person-resolver
+          list-resolver
+          enemies-resolver
+          friends-resolver
+          task-list-resolver
+          task-resolver
+          task-list-resolver])
 
 (comment
   @task-table
