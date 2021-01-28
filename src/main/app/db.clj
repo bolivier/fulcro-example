@@ -20,7 +20,7 @@
 (defn delete-task [id]
   (d/transact! conn [[:db.fn/retractEntity id]]))
 
-(defn task-id-list []
+(defn all-task-list []
   (d/q '[:find ?e
          :where [?e :task/id]]
        @conn))

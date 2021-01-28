@@ -62,7 +62,7 @@
   {:tasks
    (mapv
     (fn [[id]] {:task/id id})
-    (db/task-id-list))})
+    (db/all-task-list))})
 
 (defstate resolvers
   :start [person-resolver list-resolver enemies-resolver friends-resolver task-list-resolver task-resolver])
